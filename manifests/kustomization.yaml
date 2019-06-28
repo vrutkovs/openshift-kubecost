@@ -7,3 +7,4 @@ resources:
   - 06-persistentVolumeClaim.yaml
   - 07-deployment.yaml
   - 08-service.yaml
+  - 09-scc.yaml
