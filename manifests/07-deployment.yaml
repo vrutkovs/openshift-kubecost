@@ -36,6 +36,8 @@ spec:
           volumeMounts:
             - mountPath: /etc/nginx/conf.d/
               name: nginx-conf
+            - mountPath: /etc/ssl/certs
+              name: all-certs
         - env:
             - name: PROMETHEUS_SERVER_ENDPOINT
               valueFrom:
@@ -73,6 +75,8 @@ spec:
           volumeMounts:
             - mountPath: /var/configs
               name: persistent-configs
+            - mountPath: /etc/ssl/certs
+              name: all-certs
         - env:
             - name: PROMETHEUS_SERVER_ENDPOINT
               valueFrom:
@@ -110,7 +114,21 @@ spec:
           volumeMounts:
             - mountPath: /var/configs
               name: persistent-configs
+            - mountPath: /etc/ssl/certs
+              name: all-certs
       initContainers:
+        - env:
+          image: 'ajaytripathy/kubecost-init:prod-1.30.0'
+          name: cost-analyzer-init-certs
+          command:
+          - "update-ca-certificates"
+          volumeMounts:
+            - mountPath: /usr/local/share/ca-certificates
+              name: prom-ca
+            - mountPath: /etc/ssl/certs
+              name: all-certs
+          securityContext:
+            runAsUser: 0
         - env:
             - name: PROMETHEUS_SERVER_ENDPOINT
               valueFrom:
@@ -119,6 +137,9 @@ spec:
                   name: kubecost
           image: 'ajaytripathy/kubecost-init:prod-1.30.0'
           name: cost-analyzer-init
+          volumeMounts:
+            - mountPath: /etc/ssl/certs
+              name: all-certs
       restartPolicy: Always
       securityContext:
         fsGroup: 1001
@@ -134,3 +155,8 @@ spec:
         - name: persistent-configs
           persistentVolumeClaim:
             claimName: kubecost
+        - name: prom-ca
+          configMap:
+            name: prom-ca
+        - name: all-certs
+          emptyDir: {}

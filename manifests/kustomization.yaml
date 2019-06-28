@@ -8,3 +8,4 @@ resources:
   - 07-deployment.yaml
   - 08-service.yaml
   - 09-scc.yaml
+  - 10-prom-rolebinding.yaml

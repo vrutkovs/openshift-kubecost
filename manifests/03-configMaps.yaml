@@ -4,14 +4,39 @@ metadata:
   name: kubecost
 data:
   prometheus-alertmanager-endpoint: http://alertmanager-main.openshift-monitoring.svc.cluster.local
-  prometheus-server-endpoint: http://prometheus-k8s.openshift-monitoring.svc.cluster.local
+  prometheus-server-endpoint: https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9092
   kubecost-token: not-applied
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: prom-ca
+data:
+  service-ca.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIDCjCCAfKgAwIBAgIBATANBgkqhkiG9w0BAQsFADA2MTQwMgYDVQQDDCtvcGVu
+    c2hpZnQtc2VydmljZS1zZXJ2aW5nLXNpZ25lckAxNTYxNzExMDUwMB4XDTE5MDYy
+    ODA4MzczMFoXDTIwMDYyNzA4MzczMVowNjE0MDIGA1UEAwwrb3BlbnNoaWZ0LXNl
+    cnZpY2Utc2VydmluZy1zaWduZXJAMTU2MTcxMTA1MDCCASIwDQYJKoZIhvcNAQEB
+    BQADggEPADCCAQoCggEBAOGbOElOYgaKD64lL7yHvZDl7N2HnKFF5jzKvihHERfD
+    zyE82KDDFIk1+QQgLq+6gQLa7u+x/Bc7WcLlzZegNKg+3ctfWJv++5RVUs3VjPYy
+    zv1s/8ZUCZ+aMN4JJENwSwPl3d7CdZkKPaPnk0jsnSqtJsQxF4Na33HTmpbj3dM7
+    8N5THZ+9dehotX80MOytVePolgy0mDfNTM2dY6MhLbZ2hed/u0oPBzkNuZw0EwjV
+    CoGn1qYKESvkZ8D1dDTxIPm5F9OQUJntf3J9Xi9nE2gmK+d+BvtVYibkgwgt+gG9
+    EQKrugLVsjWiUBX+gZ0LE4eZqLyJ2kmeYSf2tgBjbCsCAwEAAaMjMCEwDgYDVR0P
+    AQH/BAQDAgKkMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAJYv
+    +nGmSE2Zs+MJALf4EuBR2V42a8wk4rmEzu9wLckB8g7Nw1pviTmgXS27cCrY2m3x
+    KpjtwX7sHSOmrYUEDbiixrXDIfQuOTFMvz1b/NQFpAoZmKYLEFfWIMjYI9QEiyPH
+    eN2PE99x5N8SulbqJAZvyEwu16Ixm/dNH21GyCpWjXM5mMYMY5O1InkUcbnGLNjv
+    Zpadr3UG6Me/7lH4s6yv911hQWQlKJesVZYJtjMlQEeGDXoVCE8r5dHOZdJul85/
+    Bs1T0anbn1T7YLzaTE/mMFKT06wV+5JWb31rHVlk3EtrSYwFtzP/s1ljItcjvGGw
+    l8rnEoBOQNR/e3K6JTY=
+    -----END CERTIFICATE-----
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: nginx-conf
-  namespace: kubecost
 data:
   nginx.conf: |
     gzip_static  on;
