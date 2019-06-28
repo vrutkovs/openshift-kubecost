@@ -1,0 +1,5 @@
+namespace: kubecost
+commonLabels:
+  app: kubecost
+bases:
+- manifests/

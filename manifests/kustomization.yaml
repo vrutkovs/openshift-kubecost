@@ -1,0 +1,9 @@
+resources:
+  - 01-namespace.yaml
+  - 02-serviceAccount.yaml
+  - 03-configMaps.yaml
+  - 04-clusterRole.yaml
+  - 05-roleBinding.yaml
+  - 06-persistentVolumeClaim.yaml
+  - 07-deployment.yaml
+  - 08-service.yaml
